@@ -1,0 +1,21 @@
+{% extends 'mask/base.html' %}
+
+{% block content %}
+<div style="max-width: 600px;">
+    <h1>{{ product.name }}</h1>
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%;">
+    {% endif %}
+    <p><strong>Описание:</strong> {{ product.description }}</p>
+    <p><strong>Производитель:</strong> {{ product.manufacturer }}</p>
+    <p><strong>В наличии:</strong> {{ product.quantity_in_stock }} шт.</p>
+    <p style="font-size: 20px; color: green;">Цена: {{ product.price }} руб.</p>
+
+    <form action="{% url 'mask:add_to_cart' product.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" style="padding: 10px 20px;">Купить</button>
+    </form>
+    <br>
+    <a href="{% url 'mask:product_list' %}">← Назад в каталог</a>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'mask/base.html' %}
+
+{% block content %}
+<h1>Каталог масок</h1>
+
+
+<form method="get" style="margin-bottom: 20px;">
+    <input type="text" name="q" placeholder="Поиск по названию..." value="{{ request.GET.q }}">
+    <button type="submit">Найти</button>
+</form>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {% for product in products %}
+    <div style="border: 1px solid #ccc; padding: 10px;">
+        <h3>{{ product.name }}</h3>
+        <p>Цена: {{ product.price }} руб.</p>
+        <a href="{% url 'mask:product_detail' product.pk %}">Подробнее</a>
+    </div>
+    {% empty %}
+    <p>Товары не найдены.</p>
+    {% endfor %}
+</div>
+{% endblock %}

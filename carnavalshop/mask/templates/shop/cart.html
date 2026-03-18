@@ -1,0 +1,56 @@
+{% extends 'mask/base.html' %}
+
+{% block content %}
+<h1>Ваша корзина</h1>
+
+{% if items %}
+<table border="1" width="100%" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Товар</th>
+            <th>Количество</th>
+            <th>Цена за ед.</th>
+            <th>Стоимость</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>
+                <!-- Форма обновления количества (Задание 2.4) -->
+                <form action="{% url 'mask:update_cart' item.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.quantity_in_stock }}">
+                    <button type="submit">Обновить</button>
+                </form>
+            </td>
+            <td>{{ item.product.price }} руб.</td>
+            <td>{% widthratio item.product.price 1 item.quantity %} руб.</td>
+            <td>
+                <!-- Форма удаления (Задание 2.5) -->
+                <form action="{% url 'mask:remove_from_cart' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" style="color: red;">Удалить</button>
+                </form>
+                <!-- Блок с кнопкой оформления заказа -->
+<div style="text-align: right; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ccc;">
+    <a href="{% url 'mask:checkout' %}" 
+       style="display: inline-block; padding: 12px 25px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;">
+        Оформить заказ
+    </a>
+</div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div style="text-align: right; margin-top: 20px;">
+    <h2>Итоговая стоимость: {{ total_price }} руб.</h2>
+</div>
+{% else %}
+    <p>Корзина пока пуста. Загляните в <a href="{% url 'mask:product_list' %}">каталог</a>.</p>
+{% endif %}
+{% endblock %}

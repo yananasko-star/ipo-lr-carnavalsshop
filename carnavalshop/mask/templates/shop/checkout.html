@@ -1,0 +1,20 @@
+{% extends 'mask/base.html' %}
+{% block content %}
+<h1>Оформление заказа</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>
+        <label>Адрес доставки:</label><br>
+        <input type="text" name="address" required style="width: 100%; padding: 8px;">
+    </p>
+    <p>
+        <label>Контактный телефон:</label><br>
+        <input type="text" name="phone" required style="width: 100%; padding: 8px;">
+    </p>
+    <hr>
+    <h3>Ваш заказ на сумму: {{ total_price }} руб.</h3>
+    <button type="submit" style="background: green; color: white; padding: 10px 20px; cursor: pointer;">
+        Подтвердить заказ и получить чек
+    </button>
+</form>
+{% endblock %}

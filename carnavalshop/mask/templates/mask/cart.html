@@ -1,0 +1,32 @@
+{% extends 'mask/base.html' %}
+
+{% block content %}
+<h1>Ваша корзина</h1>
+
+{% if items %}
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Товар</th>
+            <th>Количество</th>
+            <th>Действие</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>
+                <form action="{% url 'mask:update_cart' item.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" style="width: 50px;">
+                    <button type="submit">Обновить</button>
+                </form>
+            </td>
+            <td>
+                <a href="{% url 'mask:remove_from_cart' item.id %}" onclick="return confirm('Удалить?')">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Корзина пуста.</p>
+{% endif %}
+{% endblock %}

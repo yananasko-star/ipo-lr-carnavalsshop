@@ -1,0 +1,8 @@
+{% extends 'mask/base.html' %}
+{% block content %}
+    <h1>Заказ успешно оформлен!</h1>
+    <p>Спасибо за покупку в CarnavalShop.</p>
+    <p>Сумма вашего заказа составила: <strong>{{ total }} руб.</strong></p>
+    <hr>
+    <a href="{% url 'mask:product_list' %}">Вернуться в каталог</a>
+{% endblock %}

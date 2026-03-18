@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>CarnavalShop</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'mask:product_list' %}">Каталог</a> |
+        {% if user.is_authenticated %}
+            <a href="{% url 'mask:cart_view' %}">Корзина</a> |
+            Привет, {{ user.username }}!
+        {% else %}
+            <a href="/admin/">Войти</a>
+        {% endif %}
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
